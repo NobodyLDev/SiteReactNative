@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StatusBar } from 'react-native';
+import Header from './components/header.js';
+import Logotipo from './components/logotipo.js'; 
+import Produtos from './components/ItemsProducts.js';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Header links={['Home', 'Itens', 'Profile', 'Support']} />
+      </View>
+
+      <Logotipo texto="Minha Loja" />
+      
+      <View style={styles.produtosContainer}>
+        <Produtos />
+      </View>
+
+      <StatusBar />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffff',
+  },
+  header: {
+    width: '100%',
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  produtosContainer: {
+    flex: 1,
+    padding: 10,
   },
 });
