@@ -6,6 +6,7 @@ import Produtos from './components/ItemsProducts.js';
 
 export default function App() {
   return (
+  
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Header links={['Home', 'Itens', 'Profile', 'Support']} />

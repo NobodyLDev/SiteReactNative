@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { Text, SafeAreaView, StyleSheet, FlatList, Image, View, TouchableOpacity } from 'react-native';
+import { useCart } from './CartContext'; // Importando o contexto
 
 export default function Produtos(props) {
     const [categoria, setCategoria] = useState('');
-    const [estadocategoria, setestadoCategoria] = useState(false);
+    const [estadoCategoria, setEstadoCategoria] = useState(false);
+    const { addToCart } = useCart(); // Usando o contexto do carrinho
 
+    // Definindo os produtos
     const produtos = [
         {
             id: 1,
             img: require('../assets/celular.png'),
             category: "CellPhone",
-            title: "Celular top",
+            title: "Celular Samsung S23",
             price: 1200,
         },
         {
@@ -29,19 +32,20 @@ export default function Produtos(props) {
         },
         {
             id: 4,
-            img: require('../assets/nintendo.png'), // Certifique-se de que o caminho da imagem está correto
+            img: require('../assets/nintendo.png'),
             category: "VideoGame",
             title: "Nintendo switch",
             price: 500,
         },
     ];
 
+    // Função para filtrar produtos por categoria
     function filtros(categoria) {
         setCategoria(categoria);
-        setestadoCategoria(true);
+        setEstadoCategoria(true);
     }
 
-    const filtro = estadocategoria
+    const filtro = estadoCategoria
         ? produtos.filter((p) => p.category === categoria)
         : produtos;
 
@@ -70,7 +74,10 @@ export default function Produtos(props) {
                             <Image style={styles.imagem} source={item.img} />
                             <Text style={styles.paragraph}>{item.title}</Text>
                             <Text style={styles.price}>R$ {item.price}</Text>
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => addToCart({ ...item, quantity: 1 })} // Adicionar ao carrinho
+                            >
                                 <Text style={styles.buttonText}>Adicionar ao carrinho</Text>
                             </TouchableOpacity>
                         </TouchableOpacity>
@@ -114,30 +121,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         marginTop: 5,
+        margin: 10
     },
     buttonText: {
         color: '#fff',
         fontWeight: 'bold',
     },
     subheader: {
-        marginTop: 50,
+        marginTop: 70,
         justifyContent: 'center',
         flexDirection: 'row',
-    },
-    subheaderparagraph: {
-        marginRight: 10,
-        fontSize: 16,
-
-    },
-    button: {
-        backgroundColor: '#007BFF', // Cor do botão
-        borderRadius: 5, // Cantos arredondados
-        padding: 10, // Espaçamento interno
-        marginHorizontal: 5, // Espaçamento entre os botões
-    },
-    buttonText: {
-        color: 'white', // Cor do texto
-        fontSize: 14,
-        fontWeight: 'bold',
+      
     },
 });
